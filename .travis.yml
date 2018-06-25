@@ -13,5 +13,5 @@ before_install:
   - composer install -n
 
 script:
-  - ./vendor/bin/phplint
   - ./vendor/bin/phpcs -v --standard=PSR2 src tests
+  - ./vendor/bin/phpunit
