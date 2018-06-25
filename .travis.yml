@@ -9,6 +9,11 @@ php:
   - 5.4
   - 5.3
 
+matrix:
+  include:
+    - php: 5.3
+      dist: precise
+
 before_install:
   - composer install -n
 

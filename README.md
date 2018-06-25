@@ -4,3 +4,5 @@
 [![License](https://poser.pugx.org/Crowdstar/reflection/license.svg)](https://packagist.org/packages/crowdstar/reflection)
 
 A PHP reflection library to directly access protected/private properties and call protected/private methods.
+
+This library works with major versions of PHP from 5.3 to 7.2.
