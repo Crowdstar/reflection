@@ -2,7 +2,7 @@
     "name": "crowdstar/reflection",
     "description": "Allow to directly access protected/private properties and call protected/private methods.",
     "homepage": "https://www.glu.com",
-    "license": "proprietary",
+    "license": "Apache-2.0",
     "require": {
         "php": ">=5.3.3"
     },
