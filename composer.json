@@ -12,12 +12,12 @@
     },
     "autoload": {
         "psr-4": {
-            "CrowdStar\\Reflection\\": "src/CrowdStar/Reflection/"
+            "CrowdStar\\Reflection\\": "src/"
         }
     },
     "autoload-dev": {
-        "psr-4": {
-            "CrowdStar\\Tests\\Reflection\\": "tests/CrowdStar/Reflection/"
-        }
+        "classmap": [
+            "tests/Helper.php"
+        ]
     }
 }
