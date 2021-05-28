@@ -293,8 +293,18 @@ class ReflectionTest extends PHPUnit_Framework_TestCase
      */
     public function testCallNonStaticMethodWithoutObject()
     {
-        $this->expectException('CrowdStar\Reflection\Exception');
-        $this->expectExceptionMessage("The constructor of class 'CrowdStar\Tests\Reflection\Helper' has some required parameters.");
+        if (method_exists($this, 'setExpectedException')) {
+            // PHPUnit 4
+            $this->setExpectedException(
+                'CrowdStar\Reflection\Exception',
+                "The constructor of class 'CrowdStar\Tests\Reflection\Helper' has some required parameters."
+            );
+        } else {
+            $this->expectException('CrowdStar\Reflection\Exception');
+            $this->expectExceptionMessage(
+                "The constructor of class 'CrowdStar\Tests\Reflection\Helper' has some required parameters."
+            );
+        }
 
         Reflection::callMethod('CrowdStar\Tests\Reflection\Helper', 'callProtectedMethod', array('dummy'));
     }
