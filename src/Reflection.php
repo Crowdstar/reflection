@@ -98,8 +98,8 @@ class Reflection
      */
     public static function getMethod($className, $methodName)
     {
-        $class  = new ReflectionClass($className);
-        $method = $class->getMethod($methodName);
+        $r = new ReflectionClass($className);
+        $method = $r->getMethod($methodName);
         $method->setAccessible(true);
 
         return $method;
@@ -112,12 +112,24 @@ class Reflection
      * @param string $methodName
      * @param array $args
      * @return mixed
+     * @throws Exception
      * @throws ReflectionException
      */
     public static function callMethod($class, $methodName, array $args = array())
     {
         $method = self::getMethod((is_object($class) ? get_class($class) : $class), $methodName);
-        $class  = is_object($class) ? $class : (new $class());
+        if ($method->isStatic()) {
+            return $method->invokeArgs(null, $args);
+        }
+
+        if (!is_object($class)) {
+            $r = new ReflectionClass($class);
+            if ($r->getConstructor()->getNumberOfRequiredParameters() > 0) {
+                throw new Exception("The constructor of class '{$class}' has some required parameters.");
+            }
+
+            $class = new $class();
+        }
 
         return $method->invokeArgs($class, $args);
     }

@@ -65,7 +65,7 @@ class ReflectionTest extends PHPUnit_Framework_TestCase
      */
     public function testGetObjectProperty($expected, $propertyName, $message)
     {
-        $this->assertSame($expected, Reflection::getProperty(new Helper(), $propertyName), $message);
+        $this->assertSame($expected, Reflection::getProperty(new Helper('foo'), $propertyName), $message);
     }
 
     /**
@@ -93,7 +93,7 @@ class ReflectionTest extends PHPUnit_Framework_TestCase
      */
     public function testGetStaticProperty($expected, $propertyName)
     {
-        $helper = new Helper();
+        $helper = new Helper('foo');
 
         $this->assertSame(
             $expected,
@@ -147,7 +147,7 @@ class ReflectionTest extends PHPUnit_Framework_TestCase
      */
     public function testSetObjectProperty($propertyName, $value, $message)
     {
-        $helper = new Helper();
+        $helper = new Helper('foo');
         Helper::reset();
         Reflection::setProperty($helper, $propertyName, $value);
         $this->assertSame($value, Reflection::getProperty($helper, $propertyName), $message);
@@ -180,7 +180,7 @@ class ReflectionTest extends PHPUnit_Framework_TestCase
      */
     public function testSetStaticProperty($propertyName, $value)
     {
-        $helper = new Helper();
+        $helper = new Helper('foo');
 
         foreach (array(get_class($helper), $helper) as $class) {
             Helper::reset();
@@ -243,9 +243,8 @@ class ReflectionTest extends PHPUnit_Framework_TestCase
      */
     public function testCallObjectMethod($expected, $methodName, $value, $message)
     {
-        $this->assertSame($expected, Reflection::callMethod(new Helper(), $methodName, array($value)), $message);
+        $this->assertSame($expected, Reflection::callMethod(new Helper('foo'), $methodName, array($value)), $message);
     }
-
 
     /**
      * @return array
@@ -275,7 +274,7 @@ class ReflectionTest extends PHPUnit_Framework_TestCase
      */
     public function testCallStaticMethod($expected, $methodName, $value)
     {
-        $helper = new Helper();
+        $helper = new Helper('foo');
 
         $this->assertSame(
             $expected,
@@ -287,5 +286,16 @@ class ReflectionTest extends PHPUnit_Framework_TestCase
             Reflection::callMethod(get_class($helper), $methodName, array($value)),
             'to call a protected/private static method of a class'
         );
+    }
+
+    /**
+     * @covers Reflection::callMethod()
+     */
+    public function testCallNonStaticMethodWithoutObject()
+    {
+        $this->expectException('CrowdStar\Reflection\Exception');
+        $this->expectExceptionMessage("The constructor of class 'CrowdStar\Tests\Reflection\Helper' has some required parameters.");
+
+        Reflection::callMethod('CrowdStar\Tests\Reflection\Helper', 'callProtectedMethod', array('dummy'));
     }
 }

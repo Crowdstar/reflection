@@ -46,6 +46,11 @@ class Helper
      */
     private static $privateStaticProperty = 'private static property';
 
+    public function __construct($foo)
+    {
+        $foo = 'This parameter is present only to test calls to private/protected static methods.';
+    }
+
     /**
      * @return void
      */
