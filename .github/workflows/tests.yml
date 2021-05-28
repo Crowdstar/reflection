@@ -31,6 +31,3 @@ jobs:
 
       - name: Run Unit Tests
         run: ./vendor/bin/phpunit
-
-      - name: Run Syntax Checks
-        run: docker run --rm -v "$(pwd):/project" -w /project -i jakzal/phpqa:php${{ matrix.php }} phplint src tests
