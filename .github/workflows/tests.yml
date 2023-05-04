@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        php: ["8.0" "8.1" "8.2"]
+        php: ["8.0", "8.1", "8.2"]
 
     name: Tests Under PHP ${{ matrix.php }}
 
