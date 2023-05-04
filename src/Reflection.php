@@ -15,6 +15,8 @@
  * limitations under the License.
  *************************************************************************/
 
+declare(strict_types=1);
+
 namespace CrowdStar\Reflection;
 
 use ReflectionClass;
@@ -39,12 +41,12 @@ class Reflection
      * @throws Exception If the property does not exist.
      * @throws ReflectionException
      */
-    public static function findProperty($class, $name, $access = true)
+    public static function findProperty($class, string $name, bool $access = true): ReflectionProperty
     {
         $reflection = new ReflectionClass($class);
 
-        while (! $reflection->hasProperty($name)) {
-            if (! ($reflection = $reflection->getParentClass())) {
+        while (!$reflection->hasProperty($name)) {
+            if (!($reflection = $reflection->getParentClass())) {
                 throw new Exception("Class '{$class}' does not have property '{$name}' defined.");
             }
         }
@@ -64,7 +66,7 @@ class Reflection
      * @throws Exception If the property does not exist.
      * @throws ReflectionException
      */
-    public static function getProperty($class, $name)
+    public static function getProperty($class, string $name): mixed
     {
         $property = static::findProperty((is_object($class) ? get_class($class) : $class), $name);
 
@@ -77,26 +79,21 @@ class Reflection
      * @param object|string $class The class instance or name.
      * @param string $name The name of a property.
      * @param mixed $value The new value.
-     * @return void
      * @throws Exception If the property does not exist.
      * @throws ReflectionException
      */
-    public static function setProperty($class, $name, $value)
+    public static function setProperty($class, string $name, mixed $value): void
     {
         $property = static::findProperty((is_object($class) ? get_class($class) : $class), $name);
-
-        return $property->setValue(is_object($class) ? $class : null, $value);
+        $property->setValue(is_object($class) ? $class : null, $value);
     }
 
     /**
      * Get a protected/private static/non-static method from given class.
      *
-     * @param string $className
-     * @param string $methodName
-     * @return ReflectionMethod
      * @throws ReflectionException
      */
-    public static function getMethod($className, $methodName)
+    public static function getMethod(string $className, string $methodName): ReflectionMethod
     {
         $r = new ReflectionClass($className);
         $method = $r->getMethod($methodName);
@@ -109,13 +106,10 @@ class Reflection
      * Call a protected/private static/non-static method from given class.
      *
      * @param string|object $class
-     * @param string $methodName
-     * @param array $args
-     * @return mixed
      * @throws Exception
      * @throws ReflectionException
      */
-    public static function callMethod($class, $methodName, array $args = array())
+    public static function callMethod($class, string $methodName, array $args = []): mixed
     {
         $method = self::getMethod((is_object($class) ? get_class($class) : $class), $methodName);
         if ($method->isStatic()) {

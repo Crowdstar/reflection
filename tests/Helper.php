@@ -15,6 +15,8 @@
  * limitations under the License.
  *************************************************************************/
 
+declare(strict_types=1);
+
 namespace CrowdStar\Tests\Reflection;
 
 /**
@@ -26,72 +28,41 @@ namespace CrowdStar\Tests\Reflection;
  */
 class Helper
 {
-    /**
-     * @var string
-     */
-    protected $protectedProperty = 'protected property';
+    protected string $protectedProperty = 'protected property';
 
-    /**
-     * @var string
-     */
-    private $privateProperty = 'private property';
+    private string $privateProperty = 'private property';
 
-    /**
-     * @var string
-     */
-    protected static $protectedStaticProperty = 'protected static property';
+    protected static string $protectedStaticProperty = 'protected static property';
 
-    /**
-     * @var string
-     */
-    private static $privateStaticProperty = 'private static property';
+    private static string $privateStaticProperty = 'private static property';
 
     public function __construct($foo)
     {
         $foo = 'This parameter is present only to test calls to private/protected static methods.';
     }
 
-    /**
-     * @return void
-     */
-    public static function reset()
+    public static function reset(): void
     {
         self::$protectedStaticProperty = 'protected static property';
-        self::$privateStaticProperty   = 'private static property';
+        self::$privateStaticProperty = 'private static property';
     }
 
-    /**
-     * @param string $value
-     * @return string
-     */
-    protected function callProtectedMethod($value)
+    protected function callProtectedMethod(string $value): string
     {
         return 'value returned from a protected method: ' . $value;
     }
 
-    /**
-     * @param string $value
-     * @return string
-     */
-    protected function callPrivateMethod($value)
+    protected function callPrivateMethod(string $value): string
     {
         return 'value returned from a private method: ' . $value;
     }
 
-    /**
-     * @param string $value
-     * @return string
-     */
-    protected static function callProtectedStaticMethod($value)
+    protected static function callProtectedStaticMethod(string $value): string
     {
         return 'value returned from a protected static method: ' . $value;
     }
 
-    /**
-     * @param string $value
-     * @return string
-     */
-    protected static function callPrivateStaticMethod($value)
+    protected static function callPrivateStaticMethod(string $value): string
     {
         return 'value returned from a private static method: ' . $value;
     }

@@ -10,7 +10,8 @@
 # Ignore phplint files
 /phplint.cache
 
-# Ignore file phpunit.xml
+# Ignore PHPUnit files
+/.phpunit.result.cache
 /phpunit.xml
 
 # Ignore Composer files

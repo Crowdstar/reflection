@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        php: ["5.3", "5.4", "5.6", "7.0", "7.1", "7.2", "7.3", "7.4"]
+        php: ["8.0" "8.1" "8.2"]
 
     name: Tests Under PHP ${{ matrix.php }}
 
@@ -23,7 +23,7 @@ jobs:
           coverage: none
 
       - name: Install dependencies
-        uses: nick-invision/retry@v1
+        uses: nick-invision/retry@v2
         with:
           timeout_minutes: 5
           max_attempts: 5

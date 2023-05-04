@@ -9,6 +9,14 @@ This library works with major versions of PHP from 5.3 to 8.2.
 
 # Installation
 
+For PHP 8.0+, please use version 2.0:
+
+```bash
+composer require crowdstar/reflection:~2.0.0
+```
+
+For old versions of PHP (PHP 5.3 to PHP 7.4), please use version 1.0 instead:
+
 ```bash
 composer require crowdstar/reflection:~1.0.0
 ```
