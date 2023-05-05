@@ -84,8 +84,7 @@ class Reflection
     public static function setProperty($class, $name, $value)
     {
         $property = static::findProperty((is_object($class) ? get_class($class) : $class), $name);
-
-        return $property->setValue(is_object($class) ? $class : null, $value);
+        $property->setValue(is_object($class) ? $class : null, $value);
     }
 
     /**
