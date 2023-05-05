@@ -41,7 +41,7 @@ class Reflection
      * @throws Exception If the property does not exist.
      * @throws ReflectionException
      */
-    public static function findProperty($class, string $name, bool $access = true): ReflectionProperty
+    public static function findProperty(object|string $class, string $name, bool $access = true): ReflectionProperty
     {
         $reflection = new ReflectionClass($class);
 
@@ -66,7 +66,7 @@ class Reflection
      * @throws Exception If the property does not exist.
      * @throws ReflectionException
      */
-    public static function getProperty($class, string $name): mixed
+    public static function getProperty(object|string $class, string $name): mixed
     {
         $property = static::findProperty((is_object($class) ? get_class($class) : $class), $name);
 
@@ -82,7 +82,7 @@ class Reflection
      * @throws Exception If the property does not exist.
      * @throws ReflectionException
      */
-    public static function setProperty($class, string $name, mixed $value): void
+    public static function setProperty(object|string $class, string $name, mixed $value): void
     {
         $property = static::findProperty((is_object($class) ? get_class($class) : $class), $name);
         $property->setValue(is_object($class) ? $class : null, $value);
@@ -105,11 +105,11 @@ class Reflection
     /**
      * Call a protected/private static/non-static method from given class.
      *
-     * @param string|object $class
+     * @param object|string $class The class instance or name.
      * @throws Exception
      * @throws ReflectionException
      */
-    public static function callMethod($class, string $methodName, array $args = []): mixed
+    public static function callMethod(object|string $class, string $methodName, array $args = []): mixed
     {
         $method = self::getMethod((is_object($class) ? get_class($class) : $class), $methodName);
         if ($method->isStatic()) {
