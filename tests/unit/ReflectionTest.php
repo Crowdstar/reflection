@@ -29,7 +29,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ReflectionTest extends TestCase
 {
-    public function dataGetObjectProperty(): array
+    public static function dataGetObjectProperty(): array
     {
         return [
             [
@@ -64,7 +64,7 @@ class ReflectionTest extends TestCase
         $this->assertSame($expected, Reflection::getProperty(new Helper('foo'), $propertyName), $message);
     }
 
-    public function dataGetStaticProperty(): array
+    public static function dataGetStaticProperty(): array
     {
         return [
             [
@@ -98,7 +98,7 @@ class ReflectionTest extends TestCase
         );
     }
 
-    public function dataSetObjectProperty(): array
+    public static function dataSetObjectProperty(): array
     {
         return [
             [
@@ -138,7 +138,7 @@ class ReflectionTest extends TestCase
         $this->assertSame($value, Reflection::getProperty($helper, $propertyName), $message);
     }
 
-    public function dataSetStaticProperty(): array
+    public static function dataSetStaticProperty(): array
     {
         return [
             [
@@ -179,7 +179,7 @@ class ReflectionTest extends TestCase
         }
     }
 
-    public function dataCallObjectMethod(): array
+    public static function dataCallObjectMethod(): array
     {
         return [
             [
@@ -219,7 +219,7 @@ class ReflectionTest extends TestCase
         $this->assertSame($expected, Reflection::callMethod(new Helper('foo'), $methodName, [$value]), $message);
     }
 
-    public function dataCallStaticMethod(): array
+    public static function dataCallStaticMethod(): array
     {
         return [
             [
