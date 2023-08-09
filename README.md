@@ -3,7 +3,8 @@
 [![Latest Unstable Version](https://poser.pugx.org/Crowdstar/reflection/v/unstable.svg)](https://packagist.org/packages/crowdstar/reflection)
 [![License](https://poser.pugx.org/Crowdstar/reflection/license.svg)](https://packagist.org/packages/crowdstar/reflection)
 
-A PHP reflection library to directly access protected/private properties and call protected/private methods.
+A PHP reflection library to directly access protected/private properties and call protected/private methods. Static
+properties and methods can also be accessed/invoked from a class directly.
 
 This library works with major versions of PHP from 5.3 to 8.2.
 
@@ -21,7 +22,15 @@ For old versions of PHP (PHP 5.3 to PHP 7.4), please use version 1.0 instead:
 composer require crowdstar/reflection:~1.0.0
 ```
 
-# Sample Usage
+# How To Use It
+
+Three static methods are provided to access protected/private properties and call protected/private methods of an object/class:
+
+* `Reflection::getProperty()`: Get current value of a property.
+* `Reflection::setProperty()`: Set a new value to a property.
+* `Reflection::callMethod()`: Call a method of a class/object.
+
+Here is a sample code showing how to use them:
 
 ```php
 <?php
