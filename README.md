@@ -25,38 +25,44 @@ composer require crowdstar/reflection:~1.0.0
 
 ```php
 <?php
+
+declare(strict_types=1);
+
 require __DIR__ . '/vendor/autoload.php';
 
 use CrowdStar\Reflection\Reflection;
 
 class Helper
 {
-    private $key;
-    private static $keyStatic;
+    private string $key;
+    private static string $keyStatic;
 
-    private function get() {
-        return 'private method invoked';
+    private function get(): string
+    {
+        return 'Private method invoked.';
     }
-    private static function getStatic(int $i, int $j) {
-        return "private static method invoked with parameter {$i} and {$j}";
+
+    private static function getStatic(int $i, int $j): string
+    {
+        return "Private static method invoked with parameter {$i} and {$j}.";
     }
-};
+}
 
 $helper = new Helper();
 
 // Access properties and invoke methods from objects.
-Reflection::setProperty($helper, 'key', 'value from a private property');
-echo "Output 1: ", Reflection::getProperty($helper, 'key'), "\n";
-echo "Output 2: ", Reflection::callMethod($helper, 'get'), "\n";
+Reflection::setProperty($helper, 'key', 'Set value to a private property.');
+echo "Output 1: ", Reflection::getProperty($helper, 'key'), PHP_EOL;
+echo "Output 2: ", Reflection::callMethod($helper, 'get'), PHP_EOL, PHP_EOL;
 
 // Access static properties and invoke static methods from objects.
-Reflection::setProperty($helper, 'keyStatic', 'value from a private static property');
-echo "Output 3: ", Reflection::getProperty($helper, 'keyStatic'), "\n";
-echo "Output 4: ", Reflection::callMethod($helper, 'getStatic', array(1, 2)), "\n";
+Reflection::setProperty($helper, 'keyStatic', 'Set value to a private static property.');
+echo "Output 3: ", Reflection::getProperty($helper, 'keyStatic'), PHP_EOL;
+echo "Output 4: ", Reflection::callMethod($helper, 'getStatic', [1, 2]), PHP_EOL, PHP_EOL;
 
 // Static properties and methods can also be accessed/invoked from a class directly.
-Reflection::setProperty(Helper::class, 'keyStatic', 'another value from a private static property');
-echo "Output 5: ", Reflection::getProperty(Helper::class, 'keyStatic'), "\n";
-echo "Output 6: ", Reflection::callMethod(Helper::class, 'getStatic', array(3, 4)), "\n";
+Reflection::setProperty(Helper::class, 'keyStatic', 'Set another value to a private static property.');
+echo "Output 5: ", Reflection::getProperty(Helper::class, 'keyStatic'), PHP_EOL;
+echo "Output 6: ", Reflection::callMethod(Helper::class, 'getStatic', [3, 4]), PHP_EOL;
 ?>
 ```
