@@ -26,9 +26,9 @@ composer require crowdstar/reflection:~1.0.0
 
 Three static methods are provided to access protected/private properties and call protected/private methods of an object/class:
 
-* `Reflection::getProperty()`: Get current value of a property.
-* `Reflection::setProperty()`: Set a new value to a property.
-* `Reflection::callMethod()`: Call a method of a class/object.
+* `CrowdStar\Reflection\Reflection::getProperty()`: Get current value of a property.
+* `CrowdStar\Reflection\Reflection::setProperty()`: Set a new value to a property.
+* `CrowdStar\Reflection\Reflection::callMethod()`: Call a method of a class/object.
 
 Here is a sample code showing how to use them:
 
@@ -44,6 +44,7 @@ use CrowdStar\Reflection\Reflection;
 class Helper
 {
     private string $key;
+
     private static string $keyStatic;
 
     private function get(): string

@@ -17,7 +17,7 @@
 
 declare(strict_types=1);
 
-namespace CrowdStar\Tests\Reflection;
+namespace CrowdStar\Reflection;
 
 /**
  * Class Helper.

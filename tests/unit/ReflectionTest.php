@@ -17,15 +17,14 @@
 
 declare(strict_types=1);
 
-namespace CrowdStar\Tests\Reflection;
+namespace CrowdStar\Reflection;
 
-use CrowdStar\Reflection\Reflection;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class ReflectionTest
  *
- * @package CrowdStar\Tests\Reflection
+ * @package CrowdStar\Reflection
  */
 class ReflectionTest extends TestCase
 {
@@ -264,15 +263,15 @@ class ReflectionTest extends TestCase
             // PHPUnit 4
             $this->setExpectedException(
                 'CrowdStar\Reflection\Exception',
-                "The constructor of class 'CrowdStar\Tests\Reflection\Helper' has some required parameters."
+                "The constructor of class 'CrowdStar\Reflection\Helper' has some required parameters."
             );
         } else {
             $this->expectException('CrowdStar\Reflection\Exception');
             $this->expectExceptionMessage(
-                "The constructor of class 'CrowdStar\Tests\Reflection\Helper' has some required parameters."
+                "The constructor of class 'CrowdStar\Reflection\Helper' has some required parameters."
             );
         }
 
-        Reflection::callMethod('CrowdStar\Tests\Reflection\Helper', 'callProtectedMethod', ['dummy']);
+        Reflection::callMethod('CrowdStar\Reflection\Helper', 'callProtectedMethod', ['dummy']);
     }
 }
