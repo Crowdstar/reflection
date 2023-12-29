@@ -1,5 +1,5 @@
 <?php
-/**************************************************************************
+/**
  * Copyright 2018 Glu Mobile Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,21 +13,14 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *************************************************************************/
+ */
 
 declare(strict_types=1);
 
 namespace CrowdStar\Reflection;
 
-use ReflectionClass;
-use ReflectionException;
-use ReflectionMethod;
-use ReflectionProperty;
-
 /**
  * Class Reflection
- *
- * @package CrowdStar\Reflection
  */
 class Reflection
 {
@@ -36,14 +29,14 @@ class Reflection
      *
      * @param object|string $class The class instance or name.
      * @param string $name The name of a property.
-     * @param boolean $access Make the property accessible?
-     * @return ReflectionProperty The property.
+     * @param bool $access Make the property accessible?
+     * @return \ReflectionProperty The property.
      * @throws Exception If the property does not exist.
-     * @throws ReflectionException
+     * @throws \ReflectionException
      */
-    public static function findProperty(object|string $class, string $name, bool $access = true): ReflectionProperty
+    public static function findProperty(object|string $class, string $name, bool $access = true): \ReflectionProperty
     {
-        $reflection = new ReflectionClass($class);
+        $reflection = new \ReflectionClass($class);
 
         while (!$reflection->hasProperty($name)) {
             if (!($reflection = $reflection->getParentClass())) {
@@ -64,11 +57,11 @@ class Reflection
      * @param string $name The name of a property.
      * @return mixed The current value of the property.
      * @throws Exception If the property does not exist.
-     * @throws ReflectionException
+     * @throws \ReflectionException
      */
     public static function getProperty(object|string $class, string $name): mixed
     {
-        $property = static::findProperty((is_object($class) ? get_class($class) : $class), $name);
+        $property = static::findProperty(is_object($class) ? get_class($class) : $class, $name);
 
         return $property->getValue(is_object($class) ? $class : null);
     }
@@ -80,22 +73,22 @@ class Reflection
      * @param string $name The name of a property.
      * @param mixed $value The new value.
      * @throws Exception If the property does not exist.
-     * @throws ReflectionException
+     * @throws \ReflectionException
      */
     public static function setProperty(object|string $class, string $name, mixed $value): void
     {
-        $property = static::findProperty((is_object($class) ? get_class($class) : $class), $name);
+        $property = static::findProperty(is_object($class) ? get_class($class) : $class, $name);
         $property->setValue(is_object($class) ? $class : null, $value);
     }
 
     /**
      * Get a protected/private static/non-static method from given class.
      *
-     * @throws ReflectionException
+     * @throws \ReflectionException
      */
-    public static function getMethod(string $className, string $methodName): ReflectionMethod
+    public static function getMethod(string $className, string $methodName): \ReflectionMethod
     {
-        $r = new ReflectionClass($className);
+        $r      = new \ReflectionClass($className);
         $method = $r->getMethod($methodName);
         $method->setAccessible(true);
 
@@ -107,17 +100,17 @@ class Reflection
      *
      * @param object|string $class The class instance or name.
      * @throws Exception
-     * @throws ReflectionException
+     * @throws \ReflectionException
      */
     public static function callMethod(object|string $class, string $methodName, array $args = []): mixed
     {
-        $method = self::getMethod((is_object($class) ? get_class($class) : $class), $methodName);
+        $method = self::getMethod(is_object($class) ? get_class($class) : $class, $methodName);
         if ($method->isStatic()) {
             return $method->invokeArgs(null, $args);
         }
 
         if (!is_object($class)) {
-            $r = new ReflectionClass($class);
+            $r = new \ReflectionClass($class);
             if ($r->getConstructor()->getNumberOfRequiredParameters() > 0) {
                 throw new Exception("The constructor of class '{$class}' has some required parameters.");
             }

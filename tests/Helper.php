@@ -1,5 +1,5 @@
 <?php
-/**************************************************************************
+/**
  * Copyright 2018 Glu Mobile Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +13,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *************************************************************************/
+ */
 
 declare(strict_types=1);
 
@@ -23,16 +23,14 @@ namespace CrowdStar\Reflection;
  * Class Helper.
  *
  * A helper class for unit tests.
- *
- * @package CrowdStar\Reflection
  */
 class Helper
 {
     protected string $protectedProperty = 'protected property';
 
-    private string $privateProperty = 'private property';
-
     protected static string $protectedStaticProperty = 'protected static property';
+
+    private string $privateProperty = 'private property';
 
     private static string $privateStaticProperty = 'private static property';
 
@@ -44,7 +42,7 @@ class Helper
     public static function reset(): void
     {
         self::$protectedStaticProperty = 'protected static property';
-        self::$privateStaticProperty = 'private static property';
+        self::$privateStaticProperty   = 'private static property';
     }
 
     protected function callProtectedMethod(string $value): string

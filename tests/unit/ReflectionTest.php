@@ -1,5 +1,5 @@
 <?php
-/**************************************************************************
+/**
  * Copyright 2018 Glu Mobile Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +13,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *************************************************************************/
+ */
 
 declare(strict_types=1);
 
@@ -24,7 +24,8 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class ReflectionTest
  *
- * @package CrowdStar\Reflection
+ * @internal
+ * @coversNothing
  */
 class ReflectionTest extends TestCase
 {
@@ -56,7 +57,7 @@ class ReflectionTest extends TestCase
 
     /**
      * @dataProvider dataGetObjectProperty
-     * @covers       Reflection::getPropert()
+     * @covers       \Reflection::getPropert()
      */
     public function testGetObjectProperty(string $expected, string $propertyName, string $message): void
     {
@@ -79,7 +80,7 @@ class ReflectionTest extends TestCase
 
     /**
      * @dataProvider dataGetStaticProperty
-     * @covers       Reflection::getPropert()
+     * @covers       \Reflection::getPropert()
      */
     public function testGetStaticProperty(string $expected, string $propertyName): void
     {
@@ -125,8 +126,8 @@ class ReflectionTest extends TestCase
 
     /**
      * @dataProvider dataSetObjectProperty
-     * @covers       Reflection::setProperty()
-     * @covers       Reflection::getProperty()
+     * @covers       \Reflection::getProperty()
+     * @covers       \Reflection::setProperty()
      * @depends      testGetObjectProperty
      */
     public function testSetObjectProperty(string $propertyName, string $value, string $message): void
@@ -153,8 +154,8 @@ class ReflectionTest extends TestCase
 
     /**
      * @dataProvider dataSetStaticProperty
-     * @covers       Reflection::setProperty()
-     * @covers       Reflection::getProperty()
+     * @covers       \Reflection::getProperty()
+     * @covers       \Reflection::setProperty()
      * @depends      testGetStaticProperty
      */
     public function testSetStaticProperty(string $propertyName, string $value): void
@@ -210,8 +211,8 @@ class ReflectionTest extends TestCase
 
     /**
      * @dataProvider dataCallObjectMethod
-     * @covers       Reflection::callMethod()
-     * @covers       Reflection::getMethod()
+     * @covers       \Reflection::callMethod()
+     * @covers       \Reflection::getMethod()
      */
     public function testCallObjectMethod(string $expected, string $methodName, string $value, string $message): void
     {
@@ -236,7 +237,7 @@ class ReflectionTest extends TestCase
 
     /**
      * @dataProvider dataCallStaticMethod
-     * @covers       Reflection::getPropert()
+     * @covers       \Reflection::getPropert()
      */
     public function testCallStaticMethod(string $expected, string $methodName, string $value): void
     {
@@ -255,7 +256,7 @@ class ReflectionTest extends TestCase
     }
 
     /**
-     * @covers Reflection::callMethod()
+     * @covers \Reflection::callMethod()
      */
     public function testCallNonStaticMethodWithoutObject(): void
     {
@@ -263,12 +264,12 @@ class ReflectionTest extends TestCase
             // PHPUnit 4
             $this->setExpectedException(
                 'CrowdStar\Reflection\Exception',
-                "The constructor of class 'CrowdStar\Reflection\Helper' has some required parameters."
+                "The constructor of class 'CrowdStar\\Reflection\\Helper' has some required parameters."
             );
         } else {
             $this->expectException('CrowdStar\Reflection\Exception');
             $this->expectExceptionMessage(
-                "The constructor of class 'CrowdStar\Reflection\Helper' has some required parameters."
+                "The constructor of class 'CrowdStar\\Reflection\\Helper' has some required parameters."
             );
         }
 
