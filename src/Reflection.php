@@ -27,7 +27,7 @@ class Reflection
     /**
      * Finds a property for the given class.
      *
-     * @param object|string $class The class instance or name.
+     * @param object|class-string $class The class instance or name.
      * @param string $name The name of a property.
      * @param bool $access Make the property accessible?
      * @return \ReflectionProperty The property.
@@ -40,7 +40,11 @@ class Reflection
 
         while (!$reflection->hasProperty($name)) {
             if (!($reflection = $reflection->getParentClass())) {
-                throw new Exception("Class '{$class}' does not have property '{$name}' defined.");
+                throw new Exception(sprintf(
+                    'Class "%s" does not have property "%s" defined.',
+                    (is_object($class) ? get_class($class) : $class),
+                    $name
+                ));
             }
         }
 
@@ -53,7 +57,7 @@ class Reflection
     /**
      * Return current value of a property.
      *
-     * @param object|string $class The class instance or name.
+     * @param object|class-string $class The class instance or name.
      * @param string $name The name of a property.
      * @return mixed The current value of the property.
      * @throws Exception If the property does not exist.
@@ -69,7 +73,7 @@ class Reflection
     /**
      * Set a new value to given property.
      *
-     * @param object|string $class The class instance or name.
+     * @param object|class-string $class The class instance or name.
      * @param string $name The name of a property.
      * @param mixed $value The new value.
      * @throws Exception If the property does not exist.
@@ -84,6 +88,7 @@ class Reflection
     /**
      * Get a protected/private static/non-static method from given class.
      *
+     * @param class-string $className The class name.
      * @throws \ReflectionException
      */
     public static function getMethod(string $className, string $methodName): \ReflectionMethod
@@ -98,7 +103,8 @@ class Reflection
     /**
      * Call a protected/private static/non-static method from given class.
      *
-     * @param object|string $class The class instance or name.
+     * @param object|class-string $class The class instance or name.
+     * @param array<mixed> $args The arguments to pass to the method.
      * @throws Exception
      * @throws \ReflectionException
      */
@@ -109,9 +115,9 @@ class Reflection
             return $method->invokeArgs(null, $args);
         }
 
-        if (!is_object($class)) {
-            $r = new \ReflectionClass($class);
-            if ($r->getConstructor()->getNumberOfRequiredParameters() > 0) {
+        if (is_string($class)) {
+            $constructor = (new \ReflectionClass($class))->getConstructor();
+            if (isset($constructor) && ($constructor->getNumberOfRequiredParameters() > 0)) {
                 throw new Exception("The constructor of class '{$class}' has some required parameters.");
             }
 

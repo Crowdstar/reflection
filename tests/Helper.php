@@ -30,13 +30,14 @@ class Helper
 
     protected static string $protectedStaticProperty = 'protected static property';
 
-    private string $privateProperty = 'private property';
+    private string $privateProperty = 'private property'; // @phpstan-ignore property.onlyWritten
 
-    private static string $privateStaticProperty = 'private static property';
+    private static string $privateStaticProperty = 'private static property'; // @phpstan-ignore property.onlyWritten
 
-    public function __construct($foo)
+    public function __construct(string $foo)
     {
-        $foo = 'This parameter is present only to test calls to private/protected static methods.';
+        // @see \CrowdStar\Reflection\ReflectionTest::testCallNonStaticMethodWithoutObject()
+        $foo = 'This parameter is present only to test calls to non-static private/protected methods.';
     }
 
     public static function reset(): void
