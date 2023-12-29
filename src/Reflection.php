@@ -40,11 +40,7 @@ class Reflection
 
         while (!$reflection->hasProperty($name)) {
             if (!($reflection = $reflection->getParentClass())) {
-                throw new Exception(sprintf(
-                    'Class "%s" does not have property "%s" defined.',
-                    (is_object($class) ? get_class($class) : $class),
-                    $name
-                ));
+                throw new Exception(sprintf('Class "%s" does not have property "%s" defined.', is_object($class) ? get_class($class) : $class, $name));
             }
         }
 
