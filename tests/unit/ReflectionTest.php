@@ -60,7 +60,7 @@ class ReflectionTest extends TestCase
 
     /**
      * @dataProvider dataGetObjectProperty
-     * @covers       \Reflection::getPropert()
+     * @covers       \CrowdStar\Reflection\Reflection::getPropert()
      */
     public function testGetObjectProperty(string $expected, string $propertyName, string $message): void
     {
@@ -86,7 +86,7 @@ class ReflectionTest extends TestCase
 
     /**
      * @dataProvider dataGetStaticProperty
-     * @covers       \Reflection::getPropert()
+     * @covers       \CrowdStar\Reflection\Reflection::getPropert()
      */
     public function testGetStaticProperty(string $expected, string $propertyName): void
     {
@@ -135,8 +135,8 @@ class ReflectionTest extends TestCase
 
     /**
      * @dataProvider dataSetObjectProperty
-     * @covers       \Reflection::getProperty()
-     * @covers       \Reflection::setProperty()
+     * @covers       \CrowdStar\Reflection\Reflection::getProperty()
+     * @covers       \CrowdStar\Reflection\Reflection::setProperty()
      * @depends      testGetObjectProperty
      */
     public function testSetObjectProperty(string $propertyName, string $value, string $message): void
@@ -166,8 +166,8 @@ class ReflectionTest extends TestCase
 
     /**
      * @dataProvider dataSetStaticProperty
-     * @covers       \Reflection::getProperty()
-     * @covers       \Reflection::setProperty()
+     * @covers       \CrowdStar\Reflection\Reflection::getProperty()
+     * @covers       \CrowdStar\Reflection\Reflection::setProperty()
      * @depends      testGetStaticProperty
      */
     public function testSetStaticProperty(string $propertyName, string $value): void
@@ -226,8 +226,8 @@ class ReflectionTest extends TestCase
 
     /**
      * @dataProvider dataCallObjectMethod
-     * @covers       \Reflection::callMethod()
-     * @covers       \Reflection::getMethod()
+     * @covers       \CrowdStar\Reflection\Reflection::callMethod()
+     * @covers       \CrowdStar\Reflection\Reflection::getMethod()
      */
     public function testCallObjectMethod(string $expected, string $methodName, string $value, string $message): void
     {
@@ -255,7 +255,7 @@ class ReflectionTest extends TestCase
 
     /**
      * @dataProvider dataCallStaticMethod
-     * @covers       \Reflection::getPropert()
+     * @covers       \CrowdStar\Reflection\Reflection::getPropert()
      */
     public function testCallStaticMethod(string $expected, string $methodName, string $value): void
     {
@@ -274,7 +274,7 @@ class ReflectionTest extends TestCase
     }
 
     /**
-     * @covers \Reflection::callMethod()
+     * @covers \CrowdStar\Reflection\Reflection::callMethod()
      */
     public function testCallNonStaticMethodWithoutObject(): void
     {
