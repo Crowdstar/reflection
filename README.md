@@ -6,7 +6,7 @@
 A PHP reflection library to directly access protected/private properties and call protected/private methods. Static
 properties and methods can also be accessed/invoked from a class directly.
 
-This library works with major versions of PHP from 5.3 to 8.2.
+This library works with major versions of PHP from 5.3 to 8.5.
 
 # Installation
 

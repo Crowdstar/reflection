@@ -46,7 +46,10 @@ class Reflection
         }
 
         $property = $reflection->getProperty($name);
-        $property->setAccessible($access);
+        if (version_compare(PHP_VERSION, '8.1.0', '<')) {
+            // As of PHP 8.1.0, calling method ReflectionProperty::setAccessible() has no effect; all properties are accessible by default.
+            $property->setAccessible($access);
+        }
 
         return $property;
     }
@@ -92,7 +95,10 @@ class Reflection
     {
         $r      = new \ReflectionClass($className);
         $method = $r->getMethod($methodName);
-        $method->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.1.0', '<')) {
+            // As of PHP 8.1.0, calling method ReflectionMethod::setAccessible() has no effect; all properties are accessible by default.
+            $method->setAccessible(true);
+        }
 
         return $method;
     }
