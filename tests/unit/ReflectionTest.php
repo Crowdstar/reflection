@@ -31,6 +31,15 @@ use PHPUnit\Framework\TestCase;
 class ReflectionTest extends TestCase
 {
     /**
+     * @dataProvider dataGetObjectProperty
+     * @covers       \CrowdStar\Reflection\Reflection::getPropert()
+     */
+    public function testGetObjectProperty(string $expected, string $propertyName, string $message): void
+    {
+        $this->assertSame($expected, Reflection::getProperty(new Helper('foo'), $propertyName), $message);
+    }
+
+    /**
      * @return array<array<string>>
      */
     public static function dataGetObjectProperty(): array
@@ -60,12 +69,23 @@ class ReflectionTest extends TestCase
     }
 
     /**
-     * @dataProvider dataGetObjectProperty
+     * @dataProvider dataGetStaticProperty
      * @covers       \CrowdStar\Reflection\Reflection::getPropert()
      */
-    public function testGetObjectProperty(string $expected, string $propertyName, string $message): void
+    public function testGetStaticProperty(string $expected, string $propertyName): void
     {
-        $this->assertSame($expected, Reflection::getProperty(new Helper('foo'), $propertyName), $message);
+        $helper = new Helper('foo');
+
+        $this->assertSame(
+            $expected,
+            Reflection::getProperty($helper, $propertyName),
+            'to get a protected/private static property of an object'
+        );
+        $this->assertSame(
+            $expected,
+            Reflection::getProperty(get_class($helper), $propertyName),
+            'to get a protected/private static property of a class'
+        );
     }
 
     /**
@@ -86,23 +106,17 @@ class ReflectionTest extends TestCase
     }
 
     /**
-     * @dataProvider dataGetStaticProperty
-     * @covers       \CrowdStar\Reflection\Reflection::getPropert()
+     * @dataProvider dataSetObjectProperty
+     * @covers       \CrowdStar\Reflection\Reflection::getProperty()
+     * @covers       \CrowdStar\Reflection\Reflection::setProperty()
+     * @depends      testGetObjectProperty
      */
-    public function testGetStaticProperty(string $expected, string $propertyName): void
+    public function testSetObjectProperty(string $propertyName, string $value, string $message): void
     {
         $helper = new Helper('foo');
-
-        $this->assertSame(
-            $expected,
-            Reflection::getProperty($helper, $propertyName),
-            'to get a protected/private static property of an object'
-        );
-        $this->assertSame(
-            $expected,
-            Reflection::getProperty(get_class($helper), $propertyName),
-            'to get a protected/private static property of a class'
-        );
+        Helper::reset();
+        Reflection::setProperty($helper, $propertyName, $value);
+        $this->assertSame($value, Reflection::getProperty($helper, $propertyName), $message);
     }
 
     /**
@@ -135,37 +149,6 @@ class ReflectionTest extends TestCase
     }
 
     /**
-     * @dataProvider dataSetObjectProperty
-     * @covers       \CrowdStar\Reflection\Reflection::getProperty()
-     * @covers       \CrowdStar\Reflection\Reflection::setProperty()
-     * @depends      testGetObjectProperty
-     */
-    public function testSetObjectProperty(string $propertyName, string $value, string $message): void
-    {
-        $helper = new Helper('foo');
-        Helper::reset();
-        Reflection::setProperty($helper, $propertyName, $value);
-        $this->assertSame($value, Reflection::getProperty($helper, $propertyName), $message);
-    }
-
-    /**
-     * @return array<array<string>>
-     */
-    public static function dataSetStaticProperty(): array
-    {
-        return [
-            [
-                'protectedStaticProperty',
-                'a new value',
-            ],
-            [
-                'privateStaticProperty',
-                'another new value',
-            ],
-        ];
-    }
-
-    /**
      * @dataProvider dataSetStaticProperty
      * @covers       \CrowdStar\Reflection\Reflection::getProperty()
      * @covers       \CrowdStar\Reflection\Reflection::setProperty()
@@ -190,6 +173,33 @@ class ReflectionTest extends TestCase
                 'to get a protected/private static property of a class'
             );
         }
+    }
+
+    /**
+     * @return array<array<string>>
+     */
+    public static function dataSetStaticProperty(): array
+    {
+        return [
+            [
+                'protectedStaticProperty',
+                'a new value',
+            ],
+            [
+                'privateStaticProperty',
+                'another new value',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider dataCallObjectMethod
+     * @covers       \CrowdStar\Reflection\Reflection::callMethod()
+     * @covers       \CrowdStar\Reflection\Reflection::getMethod()
+     */
+    public function testCallObjectMethod(string $expected, string $methodName, string $value, string $message): void
+    {
+        $this->assertSame($expected, Reflection::callMethod(new Helper('foo'), $methodName, [$value]), $message);
     }
 
     /**
@@ -226,13 +236,23 @@ class ReflectionTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCallObjectMethod
-     * @covers       \CrowdStar\Reflection\Reflection::callMethod()
-     * @covers       \CrowdStar\Reflection\Reflection::getMethod()
+     * @dataProvider dataCallStaticMethod
+     * @covers       \CrowdStar\Reflection\Reflection::getPropert()
      */
-    public function testCallObjectMethod(string $expected, string $methodName, string $value, string $message): void
+    public function testCallStaticMethod(string $expected, string $methodName, string $value): void
     {
-        $this->assertSame($expected, Reflection::callMethod(new Helper('foo'), $methodName, [$value]), $message);
+        $helper = new Helper('foo');
+
+        $this->assertSame(
+            $expected,
+            Reflection::callMethod($helper, $methodName, [$value]),
+            'to call a protected/private static method of an object'
+        );
+        $this->assertSame(
+            $expected,
+            Reflection::callMethod(get_class($helper), $methodName, [$value]),
+            'to call a protected/private static method of a class'
+        );
     }
 
     /**
@@ -252,26 +272,6 @@ class ReflectionTest extends TestCase
                 'another value',
             ],
         ];
-    }
-
-    /**
-     * @dataProvider dataCallStaticMethod
-     * @covers       \CrowdStar\Reflection\Reflection::getPropert()
-     */
-    public function testCallStaticMethod(string $expected, string $methodName, string $value): void
-    {
-        $helper = new Helper('foo');
-
-        $this->assertSame(
-            $expected,
-            Reflection::callMethod($helper, $methodName, [$value]),
-            'to call a protected/private static method of an object'
-        );
-        $this->assertSame(
-            $expected,
-            Reflection::callMethod(get_class($helper), $methodName, [$value]),
-            'to call a protected/private static method of a class'
-        );
     }
 
     /**
