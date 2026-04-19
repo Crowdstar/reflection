@@ -32,7 +32,7 @@ class ReflectionTest extends TestCase
 {
     /**
      * @dataProvider dataGetObjectProperty
-     * @covers       \CrowdStar\Reflection\Reflection::getPropert()
+     * @covers       \CrowdStar\Reflection\Reflection::getProperty()
      */
     public function testGetObjectProperty(string $expected, string $propertyName, string $message): void
     {
@@ -70,7 +70,7 @@ class ReflectionTest extends TestCase
 
     /**
      * @dataProvider dataGetStaticProperty
-     * @covers       \CrowdStar\Reflection\Reflection::getPropert()
+     * @covers       \CrowdStar\Reflection\Reflection::getProperty()
      */
     public function testGetStaticProperty(string $expected, string $propertyName): void
     {
@@ -237,7 +237,7 @@ class ReflectionTest extends TestCase
 
     /**
      * @dataProvider dataCallStaticMethod
-     * @covers       \CrowdStar\Reflection\Reflection::getPropert()
+     * @covers       \CrowdStar\Reflection\Reflection::getProperty()
      */
     public function testCallStaticMethod(string $expected, string $methodName, string $value): void
     {
