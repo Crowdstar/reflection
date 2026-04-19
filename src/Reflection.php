@@ -96,7 +96,7 @@ class Reflection
         $r      = new \ReflectionClass($className);
         $method = $r->getMethod($methodName);
         if (version_compare(PHP_VERSION, '8.1.0', '<')) {
-            // As of PHP 8.1.0, calling method ReflectionMethod::setAccessible() has no effect; all properties are accessible by default.
+            // As of PHP 8.1.0, calling method ReflectionMethod::setAccessible() has no effect; all methods are accessible by default.
             $method->setAccessible(true);
         }
 
@@ -113,7 +113,7 @@ class Reflection
      */
     public static function callMethod(object|string $class, string $methodName, array $args = []): mixed
     {
-        $method = self::getMethod(is_object($class) ? get_class($class) : $class, $methodName);
+        $method = static::getMethod(is_object($class) ? get_class($class) : $class, $methodName);
         if ($method->isStatic()) {
             return $method->invokeArgs(null, $args);
         }
