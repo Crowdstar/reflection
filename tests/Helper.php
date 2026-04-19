@@ -52,11 +52,6 @@ class Helper
         return 'value returned from a protected method: ' . $value;
     }
 
-    protected function callPrivateMethod(string $value): string
-    {
-        return 'value returned from a private method: ' . $value;
-    }
-
     protected static function callProtectedStaticMethod(string $value): string
     {
         return 'value returned from a protected static method: ' . $value;
@@ -65,5 +60,10 @@ class Helper
     protected static function callPrivateStaticMethod(string $value): string
     {
         return 'value returned from a private static method: ' . $value;
+    }
+
+    private function callPrivateMethod(string $value): string // @phpstan-ignore method.unused
+    {
+        return 'value returned from a private method: ' . $value;
     }
 }
